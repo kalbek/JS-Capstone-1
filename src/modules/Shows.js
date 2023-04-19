@@ -1,7 +1,12 @@
 class Shows {
+  //   static apiEndPoint = "https://api.tvmaze.com/shows/4/seasons";
   static apiEndPoint = "https://api.tvmaze.com/shows/1/episodes";
+  // static apiEndPoint = "https://api.tvmaze.com/shows/7/seasons";
+  //   static apiEndPoint = "https://api.tvmaze.com/schedule/full?page=1";
+  //   static apiEndPoint = "https://api.tvmaze.com/schedule/full";
   //   static apiEndPoint =
   //     "https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/5KvA5Psull4GbZZmbL4r/scores/";
+
   static involvmentAPI =
     "https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/";
   static appEndPoint =
@@ -9,6 +14,7 @@ class Shows {
   static likesEndPoint =
     "https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/1ROqsGcxrkx9Q1QtjMZk/likes/";
   static getShows = async () => {
+    // document.body.style.overflow = "visible";
     const response = await fetch(this.apiEndPoint).then((response) =>
       response.json()
     );
@@ -58,10 +64,12 @@ class Shows {
   static updateUI = async () => {
     const shows = await Shows.getShows();
     const card = document.getElementById("card");
+    const commentBody = document.getElementById("comment-section");
+
     card.classList.add("wrap", "flex");
     const tvShows = document.querySelector("#tv-shows p");
     tvShows.innerHTML = "TV Shows " + "(" + shows.length + ")";
-    shows.forEach((show) => {
+    shows.forEach((show, index) => {
       card.innerHTML += `
             <div class="container flex-column">
                 <div class="card-image"><img src="${show.image.medium}"></div>
@@ -73,21 +81,72 @@ class Shows {
                     </div>
                 </div>
                 <div class="card-comments">
-                    <button class="ptr" id="comment">Comments</button>
+                    <button type="button" class="ptr" id="comment-${index}">Comments</button>
                 </div>
             </div>
         `;
       // create click event for likes
+      //   add event listener for each comment buttons
     });
 
-    shows.forEach((show) => {
+    shows.forEach((show, index) => {
       const likeHeart = document.getElementById("heart" + show.id);
       likeHeart.addEventListener("click", (e) => {
         console.log("like-heart: ", show.id);
         Shows.setLikes(show.id);
       });
-      console.log("lh", likeHeart);
+      //   console.log("lh", likeHeart);
+
+      document
+        .getElementById("comment-" + index)
+        .addEventListener("click", () => {
+          commentBody.innerHTML = "";
+          commentBody.innerHTML = `
+                  <div class="comments visible popup" id="comments">
+                      <div class="container">
+                          <div class="image-close flex">
+                              <img src="${show.image.original}" alt="" />
+                              <div class="close ptr" id='close'></div>
+                          </div>
+                          <div class='show-details'>
+                            <div class="show-name"><p>${show.name}</p></div>
+                            <div class="descriptions flex-spaced">
+                             <div class="season-rating flex-column">
+                                <div>Season: ${show.season}</div>
+                                <div>Rating: ${show.rating.average}</div>
+                                </div>
+                             <div class="season-rating flex-column">
+                                <div>Air Date: ${show.airdate}</div>
+                                <div>Airtime: ${show.airtime}</div>
+                             </div>
+                            </div>
+                            <div class="comment-header flex-centered ">
+                              Comments
+                            </div>
+                            <div class="add-comment flex-column-centered">
+                                <div class=" comment-lists flex-column" id="comment-lists">
+                                   <!-- comments goes here ... -->
+                                </div>
+                                <div class="commnet-controls">
+                                  <div class="comment-header add-comment flex-centered ">Add a comment </div>
+                                  <button type="button" id="submit-comment" class="ptr">Comment</button>
+                                  <div class="name-input"><input type="text"/></div>
+                                  <div><textarea rows="8" cols="28"/></div>
+                                </div>
+                            </div>
+                          </div>
+                  </div>
+              </div>
+          `;
+          document.body.style.overflow = "hidden";
+          const close = document.getElementById("close");
+          close.addEventListener("click", () => {
+            commentBody.innerHTML = "";
+            document.body.style.overflow = "visible";
+          });
+        });
     });
+
     const like = await Shows.getLikes();
     console.log("like: ", like);
     // console.log(shows);
