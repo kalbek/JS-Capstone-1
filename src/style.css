@@ -115,6 +115,15 @@ header {
   display: inline-block;
 }
 
+.image-close img {
+  margin-top: 2%;
+  width: 35rem;
+  margin-left: -6rem;
+  height: auto;
+  object-fit: contain;
+  border: 3px solid #71c5bb;
+}
+
 .cards .card-image img {
   object-fit: cover;
 }
@@ -169,6 +178,7 @@ button {
 .show-details {
   margin-left: -4rem;
 }
+
 .show-details .descriptions {
   width: 37vw;
   margin-top: -3%;
@@ -227,25 +237,12 @@ input::placeholder {
   color: black;
 }
 
-.image-close img {
-  margin-top: 2%;
-  width: 35rem;
-  margin-left: -6rem;
-  height: auto;
-  object-fit: contain;
-  border: 3px solid #71c5bb;
-}
-
 .show-name {
   display: flex;
   justify-content: center;
   margin-top: -5%;
   font-size: 40px;
   font-weight: 600;
-}
-
-.visible {
-  display: visible;
 }
 
 .likes-count p {
