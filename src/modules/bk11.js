@@ -30,15 +30,9 @@ class Shows {
       const data = await response.json(); // Parse the response body as JSON
       console.log("the getted likes are: ", data); // Log the parsed JSON data to the console
       return data; // Return the parsed JSON data
-    } catch (error) {}
+    } catch (error) {
+    }
   };
-
-  static getLikesURL() {
-    const appId = "tV364kOhzeIf5RoUn6sV";
-    const involvmentAPI =
-      "https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/";
-    return `${involvmentAPI}apps/${appId}/likes`;
-  }
 
   static setLikesOrComments = async (body, url) => {
     const action = {
@@ -118,24 +112,10 @@ class Shows {
           this.likesURL
         );
       });
-      // create comments popup when comment button is clicked
+
       document
         .getElementById("comment-" + index)
         .addEventListener("click", () => {
-          Shows.globalIndex = index + 1;
-          // display comments on comments section
-          async function popuplateComments() {
-            const commenting = await Shows.getLikesOrComments(
-              `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/tV364kOhzeIf5RoUn6sV/comments?item_id=${Shows.globalIndex}`
-            );
-            const commentSection = document.getElementById("comment-lists");
-            commentSection.innerHTML = "";
-            commenting.forEach((comment) => {
-              commentSection.innerHTML += `<p>${comment.creation_date} ${comment.username} ${comment.comment}</p>`;
-            });
-          }
-          popuplateComments();
-          // create the popup
           commentBody.innerHTML = "";
           commentBody.innerHTML = `
                   <div class="comments visible" id="comments">
@@ -166,7 +146,7 @@ class Shows {
                                 <div class="commnet-controls">
                                   <div class="comment-header add-comment flex-centered " id='add-comment${index}'>Add a comment </div>
                                   <button type="button" id="${index}"  class="ptr add-comment-button">Comment</button>
-                                  <div class="name-input" ><input id="input${index}" type="text"/></div>
+                                  <div class="name-input"><input id="input${index}" type="text"/></div>
                                   <div><textarea rows="8" cols="28" id="textarea${index}" /></textarea></div>
                                 </div>
                             </div>
@@ -200,24 +180,33 @@ class Shows {
                   },
                   `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/tV364kOhzeIf5RoUn6sV/comments?item_id=${index}`
                 );
-              });
 
+              });
+              
               Shows.globalIndex = index + 1;
             }
           }
           someFn();
         });
     });
-
-    // display comments on comments section
     const commenting = await Shows.getLikesOrComments(
       `https://us-central1-involvement-api.cloudfunctions.net/capstoneApi/apps/tV364kOhzeIf5RoUn6sV/comments?item_id=${Shows.globalIndex}`
-    );
-    const commentSection = document.getElementById("comment-lists");
-    commentSection.innerHTML = "";
-    commenting.forEach((comment) => {
-      commentSection.innerHTML += `<p>${comment.creation_date} ${comment.username} ${comment.comment}</p>`;
-    });
+      );
+      console.log("curent comment: ", Shows.globalIndex, "_", commenting);
+      let addCommentButtons;
+      if (addCommentButtons !== null) {
+        addCommentButtons = document.querySelectorAll(".add-comment-button");
+        for (const button of addCommentButtons) {
+          button.addEventListener("click", () => {});
+        }
+        const commentSection = document.getElementById("comment-lists");
+        commentSection.innerHTML = '';
+        commenting.forEach(comment => {
+          commentSection.innerHTML += `<p>${comment.creation_date} ${comment.username} ${comment.comment}</p>`;
+
+        })
+
+    }
   };
 }
 

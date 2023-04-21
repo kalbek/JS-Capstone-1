@@ -1,3 +1,4 @@
+/* taken */
 * {
   font-family: "Lato", sans-serif;
 }
@@ -110,7 +111,6 @@ header {
 .cards .card-image {
   width: fit-content;
   height: auto;
-  /* height: 15rem; */
   text-align: center;
   display: inline-block;
 }
@@ -141,7 +141,6 @@ button {
 
 .comments {
   position: fixed;
-  margin-top: 2rem;
   width: 100vw;
   left: 0;
   top: 0;
@@ -156,8 +155,8 @@ button {
 .comments .container {
   opacity: 1;
   width: 70%;
-  background-color: #fff;
-  height: auto;
+  background-color: rgba(250, 250, 250, 0.9);
+  height: 95%;
   border: 2px solid #71c5bb;
   display: flex;
   flex-direction: column;
@@ -165,12 +164,12 @@ button {
   overflow-y: scroll;
   border-radius: 5px;
   position: relative;
-  
 }
+
 .show-details {
   margin-left: -4rem;
 }
-.show-details .descriptions{
+.show-details .descriptions {
   width: 37vw;
   margin-top: -3%;
   font-size: 18px;
@@ -183,7 +182,7 @@ button {
   font-weight: 600;
 }
 
-.comment-lists{
+.comment-lists {
   width: 100%;
 }
 
@@ -218,10 +217,10 @@ textarea {
   padding-bottom: 5rem;
 }
 
-#submit-comment {
+.add-comment-button {
   position: absolute;
   margin-top: 13rem;
-  margin-bottom: 2rem; 
+  margin-bottom: 2rem;
 }
 
 input::placeholder {
